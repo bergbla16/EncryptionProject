@@ -1,1 +1,2 @@
 S:\AP++\EncryptionProject\EncryptionProject\bin\Debug\EncryptionProject.exe.config
+C:\Users\vasknat16\Documents\GitHub\EncryptionProject\EncryptionProject\EncryptionProject\bin\Debug\EncryptionProject.exe.config
