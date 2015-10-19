@@ -5,6 +5,7 @@ namespace EncryptionProject
 
     public abstract class TextDecryption
     {
+        public const string testString = "testString";
         public TextDecryption(string algorithmName)
         {
             algorithmName = this.algorithmName;
@@ -19,10 +20,30 @@ namespace EncryptionProject
 
     public class DecryptCaesarCypher : TextDecryption
     {
-           public DecryptCaesarCypher(string algorithmName)
+        public DecryptCaesarCypher(string algorithmName)
         {
             this.algorithmName = algorithmName;
         }
+        //Which cypher is being decoded
+        public string getInfo()
+        {
+            return algorithmName;
+        }
+
+        //Decrypt specified cypher with force
+        public string decryptWithForce(string encryptedMessage)
+        {
+
+
+            byte[] messageInAscii = Encoding.ASCII.GetBytes(testString);
+
+            foreach (byte b in messageInAscii)
+            {
+                Console.WriteLine(b);
+            }
+        }
+
     }
 
 }
+
