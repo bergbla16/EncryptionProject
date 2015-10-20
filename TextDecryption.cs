@@ -4,9 +4,11 @@ namespace EncryptionProject
 {
 
     public abstract class TextDecryption
-    {
-        public const string testString = "testString";
+    { 
         public TextDecryption(string algorithmName)
+        public const int LOWER_ASCII_BOUND = 97;
+        public const int UPPER_ASCII_BOUND = 122;
+        public const int[] ASCII_EXCEPTIONS = new int[1] {32}; 
         {
             algorithmName = this.algorithmName;
 
@@ -35,12 +37,29 @@ namespace EncryptionProject
         {
 
 
-            byte[] messageInAscii = Encoding.ASCII.GetBytes(testString);
+            byte[] originalMessageInAscii = Encoding.ASCII.GetBytes(encryptedMessage);
+            byte[] changedMessage = new Array(originalMessageInAscii.GetLength());
 
+            int length = originalMessageInAscii.GetLength();
+
+            //Checks each letter of the alphabet (lower case only)
+            for(int i = 0; i < 26; i++)
+            {
+                //Shifts ascii value in originalMessage by i to check
+                for (int j = 0; j < length; j++)
+                {
+                    changedMessage[j] = originalMessageInAscii[j] + i;
+
+                    if
+                    Console.WriteLine(Encoding.ASCII.GetString(changedMessage, 0, length));
+                }
+            }
+            
+            /*
             foreach (byte b in messageInAscii)
             {
                 Console.WriteLine(b);
-            }
+            }*/
         }
 
     }
