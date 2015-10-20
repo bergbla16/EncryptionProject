@@ -15,7 +15,7 @@ namespace EncryptionProject
 
         public abstract string getInfo(); //Returns description of algorithm
         public abstract string encrypt(string inputMessage); //Takes text, and returns an encrypted version of the text
-        public abstract string decrypt(string encryptedMessage); // Takes an encrypted text and returns original text 
+        public abstract string decrypt(string encryptedMessage); // Takes an encrypted text and returns original text using key
 
 
 
