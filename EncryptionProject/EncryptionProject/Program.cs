@@ -25,7 +25,11 @@ namespace EncryptionProject
         public string algorithmName = "Caesar Cypher/Substitution";
 
         private int encryptionKey;
-        private int shiftAmount = 6;
+        private int SHIFT_AMOUNT = 6;
+        private int[] EXCEPTIONS = new int[1] {32};
+        private int LOWER_ASCII_BOUND = 97;
+        private int UPPER_ASCII_BOUND = 122;
+
 
         public override string getInfo()
         {
@@ -34,16 +38,31 @@ namespace EncryptionProject
 
         public override string encrypt(string inputMessage)
         {
-
-        }
-        
-        private string[] FindCorrespondingLetter()
-        {
-            string[] shiftedLetterArray = new string[26];
-            foreach (string letter in shiftedLetterArray)
+            byte[] asciiMessage = Encoding.ASCII.GetBytes(inputMessage.ToLower());
+            byte[] newAsciiMessage = new byte[inputMessage.Length];
+            for (int i = 0; i < asciiMessage.Length; i++)
             {
-
+                if (asciiMessage[i] >= LOWER_ASCII_BOUND && asciiMessage[i] <= UPPER_ASCII_BOUND)
+                {
+                    if (asciiMessage[i] > (UPPER_ASCII_BOUND - SHIFT_AMOUNT)){
+                        int shiftAfterOverflow = SHIFT_AMOUNT - (UPPER_ASCII_BOUND - asciiMessage[i]) - 1;
+                        byte newAsciiValue = (byte)(LOWER_ASCII_BOUND + shiftAfterOverflow);
+                        newAsciiMessage[i] = (newAsciiValue);
+                    }
+                    else
+                    {
+                        byte newAsciiValue = (byte)(asciiMessage[i] + SHIFT_AMOUNT);
+                        newAsciiMessage[i] = newAsciiValue;
+                    }
+                }
             }
+            return Encoding.ASCII.GetString(newAsciiMessage);
+        }
+
+
+        public override string decrypt(string encryptedMessage)
+        {
+            return "not implemented yet";
         }
     }
 }
