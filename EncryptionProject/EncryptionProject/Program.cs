@@ -46,17 +46,23 @@ namespace EncryptionProject
                 {
                     if (asciiMessage[i] > (UPPER_ASCII_BOUND - SHIFT_AMOUNT)){
                         int shiftAfterOverflow = SHIFT_AMOUNT - (UPPER_ASCII_BOUND - asciiMessage[i]) - 1;
-                        byte newAsciiValue = LOWER_ASCII_BOUND + shiftAfterOverflow;
+                        byte newAsciiValue = (byte)(LOWER_ASCII_BOUND + shiftAfterOverflow);
                         newAsciiMessage[i] = (newAsciiValue);
                     }
                     else
                     {
-                        byte newAsciiValue = asciiMessage[i] + SHIFT_AMOUNT;
+                        byte newAsciiValue = (byte)(asciiMessage[i] + SHIFT_AMOUNT);
                         newAsciiMessage[i] = newAsciiValue;
                     }
                 }
             }
-            //must convert ascii values in newAsciiMessage to string, maybe using chars
+            return Encoding.ASCII.GetString(newAsciiMessage);
+        }
+
+
+        public override string decrypt(string encryptedMessage)
+        {
+            return "not implemented yet";
         }
     }
 }
