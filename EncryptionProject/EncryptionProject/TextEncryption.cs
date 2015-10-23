@@ -22,13 +22,25 @@ namespace EncryptionProject
     }
     public class CaesarCypher : TextEncryption
     {
+        private const int[] EXCEPTIONS = new int[1] {32};
+        private const int LOWER_ASCII_BOUND = 97;
+        private const int UPPER_ASCII_BOUND = 122;
         public string algorithmName = "Caesar Cypher/Substitution";
 
         private int encryptionKey;
-        private int SHIFT_AMOUNT = 6;
-        private int[] EXCEPTIONS = new int[1] {32};
-        private int LOWER_ASCII_BOUND = 97;
-        private int UPPER_ASCII_BOUND = 122;
+        private int shiftAmount;
+
+        public CaesarCypher(int shift) 
+        {
+            this.shiftAmount = shift;
+        }
+
+        public CaesarCypher(int shift, int encryptionKey)
+        {
+            this.shiftAmount = shift;
+            this.encryptionKey = encryptionKey;
+        }
+
 
 
         public override string getInfo()
@@ -44,14 +56,14 @@ namespace EncryptionProject
             {
                 if (asciiMessage[i] >= LOWER_ASCII_BOUND && asciiMessage[i] <= UPPER_ASCII_BOUND)
                 {
-                    if (asciiMessage[i] > (UPPER_ASCII_BOUND - SHIFT_AMOUNT)){
-                        int shiftAfterOverflow = SHIFT_AMOUNT - (UPPER_ASCII_BOUND - asciiMessage[i]) - 1;
+                    if (asciiMessage[i] > (UPPER_ASCII_BOUND - shiftAmount)){
+                        int shiftAfterOverflow = shiftAmount - (UPPER_ASCII_BOUND - asciiMessage[i]) - 1;
                         byte newAsciiValue = (byte)(LOWER_ASCII_BOUND + shiftAfterOverflow);
                         newAsciiMessage[i] = (newAsciiValue);
                     }
                     else
                     {
-                        byte newAsciiValue = (byte)(asciiMessage[i] + SHIFT_AMOUNT);
+                        byte newAsciiValue = (byte)(asciiMessage[i] + shiftAmount);
                         newAsciiMessage[i] = newAsciiValue;
                     }
                 }
@@ -64,5 +76,15 @@ namespace EncryptionProject
         {
             return "not implemented yet";
         }
+    }
+    public class TestClient
+    {
+        static void Main(String[] args)
+        {
+            Console.Write("Program started");
+            CaesarCypher message1 = new CaesarCypher(5);
+            Console.WriteLine(message1.encrypt("abcdefghijklmnopqrstuvwxyz");
+        }
+
     }
 }
