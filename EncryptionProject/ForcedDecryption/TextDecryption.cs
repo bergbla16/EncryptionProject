@@ -47,6 +47,9 @@ namespace EncryptionProject
             byte[] originalMessageInAscii = Encoding.ASCII.GetBytes(encryptedMessage);
             byte[] changedMessage = new Array(originalMessageInAscii.GetLength());
 
+            string stringChangedMessage;
+            bool isRealMessage;
+
             //Checks if there are any exception in ACSII, finds location if there are and adds them to list exceptionLocation
             for (int i = 0; i < originalMessageInAscii.GetLength(); i++)
             {
@@ -76,7 +79,7 @@ namespace EncryptionProject
                             }
                         }
                     } else if (originalMessageInAscii[j] + i > UPPER_ASCII_BOUND){
-                        changedMessage[j] = LOWER_ASCII_BOUND + (originalMessageInAscii[j] + i - UPPER_ASCII_BOUND - 1);
+                        changedMessage[j] = originalMessageInAscii[j] + i - UPPER_ASCII_BOUND + LOWER_ASCII_BOUND - 1;
                     } else if (originalMessageInAscii + 1 == ASCII_EXCEPTIONS[k])
                     {
                         for (int k = 0; k < ASCII_EXCEPTIONS.GetLength(); k++)
@@ -85,10 +88,59 @@ namespace EncryptionProject
                         }
                     }
 
-
-
                     Console.WriteLine(Encoding.ASCII.GetString(changedMessage, 0, length));
+
+                    stringChangedMessage = Encoding.ASCII.GetString(changedMessage, 0, length);
+
+                    string temp = "";
+                    // Search for key phrases within decoded string
+                    for(int i = 0; i < stringChangedMessage.Length(); i++)
+                        if (( i + 2 < stringChangedMessage.Length()) && (stringChangedMessage[i] + stringChangedMessage[i+ 1] + stringChangedMessage[i + 2]).Equals("and"))
+                        {
+                            isRealMessage = true;
+                        }
+
+                        if((i + 2 < stringChangedMessage.Length()) && (stringChangedMessage[i] + stringChangedMessage[i + 1] + stringChangedMessage[i + 2]).Equals("the"))
+                        {
+                            isRealMessage = true;
+                        }
+
+                         if ((i + 2 < stringChangedMessage.Length()) && (stringChangedMessage[i] + stringChangedMessage[i + 1] + stringChangedMessage[i + 2]).Equals("ing"))
+                        {
+                            isRealMessage = true;
+                        }
+
+                    if ((i + 2 < stringChangedMessage.Length()) && (stringChangedMessage[i] + stringChangedMessage[i + 1] + stringChangedMessage[i + 2]).Equals("for"))
+                    {
+                        isRealMessage = true;
+                    }
+
+                    if ((i + 3 < stringChangedMessage.Length()) && (stringChangedMessage[i] + stringChangedMessage[i + 1] + stringChangedMessage[i + 2] + stringChangedMessage[i + 3]).Equals(" or "))
+                        {   
+                            isRealMessage = true;
+                        }
+
+                        if ((i + 3 < stringChangedMessage.Length()) && (stringChangedMessage[i] + stringChangedMessage[i + 1] + stringChangedMessage[i + 2] + stringChangedMessage[i + 3]).Equals(" at "))
+                        {
+                        isRealMessage = true;
+                        }
+
+                    if ((i + 3 < stringChangedMessage.Length()) && (stringChangedMessage[i] + stringChangedMessage[i + 1] + stringChangedMessage[i + 2] + stringChangedMessage[i + 3]).Equals(" to "))
+                    {
+                        isRealMessage = true;
+                    }
+
+                    if ((i + 3 < stringChangedMessage.Length()) && (stringChangedMessage[i] + stringChangedMessage[i + 1] + stringChangedMessage[i + 2] + stringChangedMessage[i + 3]).Equals(" or "))
+                    {
+                        isRealMessage = true;
+                    }
+
+                    if ((i + 3 < stringChangedMessage.Length()) && (stringChangedMessage[i] + stringChangedMessage[i + 1] + stringChangedMessage[i + 2] + stringChangedMessage[i + 3]).Equals(" of "))
+                    {
+                        isRealMessage = true;
+                    }
                 }
+
             }
         }
 
